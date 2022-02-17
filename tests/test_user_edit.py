@@ -13,7 +13,6 @@ class TestUserEdit(BaseCase):
         Assertions.assert_json_has_key(response1, "id")
 
         email = register_data["email"]
-        first_name = register_data["firstName"]
         password = register_data["password"]
         user_id = self.get_json_value(response1, "id")
 
@@ -53,4 +52,3 @@ class TestUserEdit(BaseCase):
             new_name,
             "Wrong username after edit"
         )
-    
