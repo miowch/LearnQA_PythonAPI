@@ -1,14 +1,14 @@
-import requests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
+from lib.my_requests import MyRequests
 
 
 class TestUserRegister(BaseCase):
     def test_create_user_successfully(self):
         data = self.prepare_registration_data()
 
-        response = requests.post(
-            "https://playground.learnqa.ru/api/user/",
+        response = MyRequests.post(
+            "/user/",
             data=data
         )
 
@@ -19,8 +19,8 @@ class TestUserRegister(BaseCase):
         email = 'vinkotov@example.com'
         data = self.prepare_registration_data(email)
 
-        response = requests.post(
-            "https://playground.learnqa.ru/api/user/",
+        response = MyRequests.post(
+            "/user/",
             data=data
         )
 
