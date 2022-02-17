@@ -1,7 +1,9 @@
+import pytest
 import requests
 from lib.base_case import BaseCase
 
 
+@pytest.mark.skip(reason="Homework")
 class TestHomeworkHeader(BaseCase):
     def test_homework_header(self):
         url = "https://playground.learnqa.ru/api/homework_header"

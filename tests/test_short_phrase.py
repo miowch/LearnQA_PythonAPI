@@ -1,3 +1,7 @@
+import pytest
+
+
+@pytest.mark.skip(reason="Homework")
 class TestShortPhrase:
     def test_short_phrase(self):
         phrase = input("Set a phrase: ")

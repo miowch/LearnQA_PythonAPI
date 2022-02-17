@@ -2,6 +2,7 @@ import pytest
 import requests
 
 
+@pytest.mark.skip(reason="Homework")
 class TestUserAgent:
     user_agents = [
         (
