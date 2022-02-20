@@ -3,6 +3,9 @@ from datetime import datetime
 
 from requests import Response
 
+from lib.assertions import Assertions
+from lib.my_requests import MyRequests
+
 
 class BaseCase:
     def get_cookie(self, response: Response, cookie_name):
@@ -32,8 +35,33 @@ class BaseCase:
 
         return {
             'password': '123',
-            'username': 'leatrnqa',
-            'firstName': 'leatrnqa',
-            'lastName': 'leatrnqa',
+            'username': 'learnqa',
+            'firstName': 'learnqa',
+            'lastName': 'learnqa',
             'email': email
         }
+
+    def register_user(self, register_data):
+        response = MyRequests.post("/user/", data=register_data)
+
+        Assertions.assert_code_status(response, 200)
+        Assertions.assert_json_has_key(response, "id")
+
+        user_id = self.get_json_value(response, "id")
+
+        return user_id
+
+    def log_in(self, login_data):
+        response = MyRequests.post("/user/login", data=login_data)
+
+        auth_sid = self.get_cookie(response, "auth_sid")
+        token = self.get_header(response, "x-csrf-token")
+
+        return auth_sid, token
+
+    def get_user(self, user_id, token, auth_sid):
+        return MyRequests.get(
+            f"/user/{user_id}",
+            headers={"x-csrf-token": token},
+            cookies={"auth_sid": auth_sid}
+        )
