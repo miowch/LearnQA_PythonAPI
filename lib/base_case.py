@@ -1,8 +1,7 @@
 import json.decoder
 from datetime import datetime
-
+import allure
 from requests import Response
-
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
 
@@ -26,6 +25,7 @@ class BaseCase:
 
         return response_as_dict[name]
 
+    @allure.step("Prepare registration data")
     def prepare_registration_data(self, email=None):
         if email is None:
             base_part = "learnqa"
@@ -41,6 +41,7 @@ class BaseCase:
             'email': email
         }
 
+    @allure.step("Create user")
     def register_user(self, register_data):
         response = MyRequests.post("/user/", data=register_data)
 
@@ -51,6 +52,7 @@ class BaseCase:
 
         return user_id
 
+    @allure.step("Log in and get authentication data")
     def log_in(self, login_data):
         response = MyRequests.post("/user/login", data=login_data)
 
@@ -59,6 +61,7 @@ class BaseCase:
 
         return auth_sid, token
 
+    @allure.step("Get user details")
     def get_user(self, user_id, token, auth_sid):
         return MyRequests.get(
             f"/user/{user_id}",
